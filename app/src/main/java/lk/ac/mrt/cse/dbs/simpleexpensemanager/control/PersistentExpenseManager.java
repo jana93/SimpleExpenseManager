@@ -14,7 +14,10 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
  */
 public class PersistentExpenseManager extends ExpenseManager {
 
-    public PersistentExpenseManager(){
+    private final Context context;
+
+    public PersistentExpenseManager(Context context){
+          this.context=context;
         try {
             setup();
         } catch (ExpenseManagerException e) {
@@ -24,10 +27,10 @@ public class PersistentExpenseManager extends ExpenseManager {
     @Override
     public void setup() throws ExpenseManagerException {
         /*** Begin generating dummy data for In-Memory implementation ***/
-        TransactionDAO persistentTransactionDAO = PersistentTransactionDAO(null);
+        TransactionDAO persistentTransactionDAO = new PersistentTransactionDAO(context);
         setTransactionsDAO(persistentTransactionDAO);
 
-        AccountDAO persistentAccountDAO = PersistentAccountDAO(null);
+        AccountDAO persistentAccountDAO = new PersistentAccountDAO(context);
         setAcountsDAO(persistentAccountDAO);
 
         // dummy data
